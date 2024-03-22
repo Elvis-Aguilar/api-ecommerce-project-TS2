@@ -21,6 +21,7 @@ class Producto extends Model
         'cantidad_exit',
         'url_foto',
         'permite_trueque',
+        'permite_contactar',
         'moneda_local',
         'moneda_sistema'
     ];

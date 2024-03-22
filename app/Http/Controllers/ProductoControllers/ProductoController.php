@@ -30,12 +30,12 @@ class ProductoController extends Controller
             'moneda_sistema' => $request->moneda_sistema,
             'cantidad_exit' => $request->cantidad_exit,
             'url_foto' => $request->url_foto,
+            'permite_contactar' => $request->permite_contactar,
             'permite_trueque' => $request->permite_trueque,
             'moneda_local' => $request->moneda_local
         ]);
-        $productos = Producto::where('usuario_vendedor',$request->usuario_vendedor)->get();
         return response()->json([
-            $productos
+            'msg' => 'Registrado con exito'
         ], 200);
     }
 
@@ -72,11 +72,27 @@ class ProductoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
-        //
+        $productos = Producto::where('usuario_vendedor',$id)->get();
+        return response()->json((
+            $productos
+        ), 200);
+
     }
 
+
+    public function imge(string $id)
+    {
+       $path = storage_path(path: 'app/public/productos/' . $id);
+
+        if (Storage::exists($path)) {
+            abort(404);
+        }
+
+        return response()->file($path);
+
+    }
     /**
      * Update the specified resource in storage.
      */
