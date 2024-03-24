@@ -29,5 +29,8 @@ Route::post('user-login', [UsuarioController::class,'logUser']);
 //rutas para las producto
 Route::get('productos/categories', [CategoriaController::class,'index']);
 Route::post('productos/producto-save-image', [ProductoController::class,'saveImage']);
+Route::post('productos/producto-save', [ProductoController::class,'store']);
 Route::get('productos/productos-user/{id}', [ProductoController::class,'show']);
+Route::get('productos/get-productos', [ProductoController::class,'index']);
 Route::get('productos/productos-img/{id}', [ProductoController::class,'imge']);
+Route::get('productos/get-procuto/{id}', [ProductoController::class,'showById']);

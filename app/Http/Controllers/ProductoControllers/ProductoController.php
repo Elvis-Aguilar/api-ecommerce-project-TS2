@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\ProductoControllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProductosModels\Categoria;
+use App\Models\ProductosModels\CategoriaProducto;
 use App\Models\ProductosModels\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,6 +16,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
+        return Producto::all();
 
     }
 
@@ -22,7 +25,7 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        Producto::create([
+       $producto = Producto::create([
             'nombre' => $request-> nombre,
             'usuario_vendedor' => $request->usuario_vendedor,
             'descripcion' => $request->descripcion,
@@ -30,10 +33,17 @@ class ProductoController extends Controller
             'moneda_sistema' => $request->moneda_sistema,
             'cantidad_exit' => $request->cantidad_exit,
             'url_foto' => $request->url_foto,
-            'permite_contactar' => $request->permite_contactar,
             'permite_trueque' => $request->permite_trueque,
+            'permite_contactar'=> $request->permite_contactar,
             'moneda_local' => $request->moneda_local
         ]);
+       $prodcutoId = $producto->id;
+
+        CategoriaProducto::create([
+            'producto_id' => $prodcutoId,
+            'categoria_id' => $request->categoria
+        ]);
+
         return response()->json([
             'msg' => 'Registrado con exito'
         ], 200);
@@ -78,6 +88,15 @@ class ProductoController extends Controller
         return response()->json((
             $productos
         ), 200);
+
+    }
+
+    public function showById(int $id)
+    {
+        $productos = Producto::where('producto_id',$id)->first();
+        return response()->json((
+        $productos)
+        , 200);
 
     }
 
