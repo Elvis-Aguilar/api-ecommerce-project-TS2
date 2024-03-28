@@ -16,6 +16,11 @@ class CategoriaController extends Controller
         return Categoria::where('estado', 2)->get();
     }
 
+    public function categoriesPendietes()
+    {
+        return Categoria::where('estado', 1)->get();
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -38,9 +43,15 @@ class CategoriaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $id)
     {
-        //
+        $categoria = Categoria::find($id);
+        if($categoria){
+            $categoria->update(['estado' => $request->estado]);
+        }
+        return response()->json([
+            'msg' => 'Actulizado con exito'
+        ], 200);
     }
 
     /**

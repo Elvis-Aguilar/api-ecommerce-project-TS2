@@ -31,6 +31,8 @@ Route::get('user-img/{id}', [UsuarioController::class,'imge']);
 
 //rutas para las producto
 Route::get('productos/categories', [CategoriaController::class,'index']);
+Route::get('productos/categories-pendientes', [CategoriaController::class,'categoriesPendietes']);
+Route::put('productos/update-categoria/{id}', [CategoriaController::class,'update']);
 Route::post('productos/producto-save-image', [ProductoController::class,'saveImage']);
 Route::post('productos/producto-save', [ProductoController::class,'store']);
 Route::get('productos/productos-user/{id}', [ProductoController::class,'show']);
