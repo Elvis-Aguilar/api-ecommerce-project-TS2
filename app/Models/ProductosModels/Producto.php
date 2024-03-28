@@ -2,6 +2,7 @@
 
 namespace App\Models\ProductosModels;
 
+use App\Models\UsuarioModels\Usuario;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,8 +13,11 @@ class Producto extends Model
     protected $table = 'producto';
     public $timestamps = false;
 
+    protected $primaryKey = 'producto_id';
+
     protected $fillable = [
         'nombre',
+        'estado',
         'usuario_vendedor',
         'fecha_reg_actuli',
         'descripcion',
@@ -25,4 +29,11 @@ class Producto extends Model
         'moneda_local',
         'moneda_sistema'
     ];
+
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class, 'usuario_vendedor');
+    }
+
+
 }

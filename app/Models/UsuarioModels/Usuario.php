@@ -2,6 +2,7 @@
 
 namespace App\Models\UsuarioModels;
 
+use App\Models\ProductosModels\Producto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +13,8 @@ class Usuario extends Model
     public $timestamps = false;
 
     protected $table = 'usuario';
+
+    protected $primaryKey = 'usuario_id';
     protected $fillable = [
         'nombre_completo',
         'contrasenia',
@@ -33,5 +36,10 @@ class Usuario extends Model
     public function infoContacto()
     {
         return $this->hasOne(UsuarioInfoContacto::class, 'usuario_info_id');
+    }
+
+    public function producto()
+    {
+        return $this->hasMany(Producto::class);
     }
 }

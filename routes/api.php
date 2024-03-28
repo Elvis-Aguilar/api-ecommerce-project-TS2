@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductoControllers\CategoriaController;
 use App\Http\Controllers\ProductoControllers\ProductoController;
+use App\Http\Controllers\ProductoControllers\RechazoController;
 use App\Http\Controllers\UsuarioControllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,8 @@ Route::post('user-register', [UsuarioController::class,'store']);
 Route::post('user-register-foto', [UsuarioController::class,'saveImage']);
 Route::get('users', [UsuarioController::class, 'index']);
 Route::post('user-login', [UsuarioController::class,'logUser']);
+Route::get('user-img/{id}', [UsuarioController::class,'imge']);
+
 
 //rutas para las producto
 Route::get('productos/categories', [CategoriaController::class,'index']);
@@ -34,3 +37,9 @@ Route::get('productos/productos-user/{id}', [ProductoController::class,'show']);
 Route::get('productos/get-productos', [ProductoController::class,'index']);
 Route::get('productos/productos-img/{id}', [ProductoController::class,'imge']);
 Route::get('productos/get-procuto/{id}', [ProductoController::class,'showById']);
+Route::post('productos/categoria-save', [CategoriaController::class,'store']);
+Route::get('productos/productos-pendientes', [ProductoController::class,'productosPendientes']);
+Route::post('productos/rechazo-producto', [RechazoController::class,'store']);
+Route::put('productos/acept-producto', [RechazoController::class,'acept']);
+
+

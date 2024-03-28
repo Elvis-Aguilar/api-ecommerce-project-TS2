@@ -13,7 +13,7 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        return Categoria::all();
+        return Categoria::where('estado', 2)->get();
     }
 
     /**
@@ -21,7 +21,10 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Categoria::create(request()->all());
+        return response()->json([
+            'msg' => 'Registrado con exito'
+        ], 200);
     }
 
     /**

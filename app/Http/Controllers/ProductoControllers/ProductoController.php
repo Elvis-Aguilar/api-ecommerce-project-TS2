@@ -16,9 +16,9 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        return Producto::all();
-
+        return Producto::where('estado', 2)->orderBy('producto_id', 'desc')->get();
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -84,7 +84,7 @@ class ProductoController extends Controller
      */
     public function show(int $id)
     {
-        $productos = Producto::where('usuario_vendedor',$id)->get();
+        $productos = Producto::where('usuario_vendedor',$id)->orderBy('producto_id', 'desc')->get();
         return response()->json((
             $productos
         ), 200);
@@ -112,6 +112,16 @@ class ProductoController extends Controller
         return response()->file($path);
 
     }
+
+    public function productosPendientes(){
+        $productos = Producto::where('estado', 1)
+            ->with('usuario')
+            ->get();
+
+        return $productos;
+    }
+
+
     /**
      * Update the specified resource in storage.
      */

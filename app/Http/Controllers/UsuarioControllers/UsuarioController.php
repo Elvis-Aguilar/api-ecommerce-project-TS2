@@ -93,6 +93,18 @@ class UsuarioController extends Controller
         return Storage::url($rutaImagen);
     }
 
+    public function imge(string $id)
+    {
+        $path = storage_path(path: 'app/public/' . $id);
+
+        if (Storage::exists($path)) {
+            abort(404);
+        }
+
+        return response()->file($path);
+
+    }
+
 
     /**
      * Display the specified resource.
