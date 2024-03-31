@@ -12,6 +12,8 @@ class RechazoProducto extends Model
     protected $table = 'rechazo_producto';
     public $timestamps = false;
 
+    protected $primaryKey = 'solicitud_id';
+
     protected $fillable = [
         'producto_id',
         'descripcion'

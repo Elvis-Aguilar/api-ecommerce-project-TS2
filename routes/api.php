@@ -47,5 +47,10 @@ Route::get('productos/categoria-producto/{id}', [CategoriaController::class,'cat
 Route::delete('productos/delete-categoria-producto/{id}', [CategoriaController::class,'destroyCategoriaProducto']);
 Route::post('productos/asociar-categoria-producto/{id}', [CategoriaController::class,'storeCategoriaProducto']);
 Route::put('productos/update-producto/{id}', [ProductoController::class,'update']);
+Route::get('productos/get-rechazo/{id}', [RechazoController::class,'show']);
+Route::get('productos/get-productos-filter-categoria/{id}', [CategoriaController::class,'productoCategoria']);
+Route::get('productos/get-productos-filter-form-pago/{id}', [ProductoController::class,'indexFilterFormPago']);
+
+
 
 

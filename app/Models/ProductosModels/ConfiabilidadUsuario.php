@@ -15,6 +15,7 @@ class ConfiabilidadUsuario extends Model
     protected $primaryKey = 'confiabilidad_usuario_id';
     protected $fillable = [
         'usuario_id',
-        'usuario_aprobados'
+        'usuario_aprobados',
+        'min_aprobados'
     ];
 }

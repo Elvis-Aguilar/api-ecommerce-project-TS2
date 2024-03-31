@@ -46,6 +46,17 @@ class CategoriaController extends Controller
         return $categoriaProducto;
     }
 
+    public function productoCategoria(int $id)
+    {
+        $categoriaProducto = CategoriaProducto::where('categoria_id', $id)
+            ->with(['producto' => function ($query) {
+                $query->where('estado', 2)->orderBy('producto_id', 'desc')->take(12);
+            }])->orderBy('producto_id', 'desc')->get();
+
+        return $categoriaProducto;
+    }
+
+
     /**
      * Update the specified resource in storage.
      */

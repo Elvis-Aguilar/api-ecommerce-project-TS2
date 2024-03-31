@@ -5,7 +5,9 @@ namespace App\Http\Controllers\ProductoControllers;
 use App\Http\Controllers\Controller;
 use App\Models\ProductosModels\Categoria;
 use App\Models\ProductosModels\CategoriaProducto;
+use App\Models\ProductosModels\ConfiabilidadUsuario;
 use App\Models\ProductosModels\Producto;
+use App\Models\ProductosModels\RechazoProducto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,16 +18,90 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        return Producto::where('estado', 2)->orderBy('producto_id', 'desc')->get();
+        return Producto::where('estado', 2)
+            ->orderBy('producto_id', 'desc')
+            ->take(12)
+            ->get();
     }
 
+    public function indexFilterFormPago(int $id)
+    {
+        return match ($id) {
+            1 => Producto::where('estado', 2)
+                ->where('moneda_sistema', '>', 0)
+                ->orderBy('producto_id', 'desc')
+                ->take(12)
+                ->get(),
+            2 => Producto::where('estado', 2)
+                ->where('moneda_local', '>', 0)
+                ->orderBy('producto_id', 'desc')
+                ->take(12)
+                ->get(),
+            3 => Producto::where('estado', 2)
+                ->where('permite_trueque', '>', 0)
+                ->orderBy('producto_id', 'desc')
+                ->take(12)
+                ->get(),
+            default => Producto::where('estado', 2)
+                ->orderBy('producto_id', 'desc')
+                ->take(12)
+                ->get(),
+        };
+
+
+    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-       $producto = Producto::create([
+
+        $userConfiable = ConfiabilidadUsuario::where('usuario_id',$request->usuario_vendedor)->first();
+        if($userConfiable){
+            if($userConfiable->usuario_aprobados >= $request->min_aprobados){
+                 $this->createProductoAprobado($request);
+            }else{
+                 $this->createProductoPendiente($request);
+            }
+        }else{
+            $this->createProductoPendiente($request);
+            ConfiabilidadUsuario::create([
+                'usuario_id' => $request->usuario_vendedor,
+                'usuario_aprobados' => 0
+            ]);
+        }
+
+        return response()->json([
+            'msg' => 'Registrado con exito'
+        ], 200);
+    }
+
+    private function createProductoAprobado(Request $request){
+        $producto = Producto::create([
+            'nombre' => $request-> nombre,
+            'usuario_vendedor' => $request->usuario_vendedor,
+            'descripcion' => $request->descripcion,
+            'especificaciones' => $request->especificaciones,
+            'moneda_sistema' => $request->moneda_sistema,
+            'cantidad_exit' => $request->cantidad_exit,
+            'url_foto' => $request->url_foto,
+            'permite_trueque' => $request->permite_trueque,
+            'permite_contactar'=> $request->permite_contactar,
+            'moneda_local' => $request->moneda_local,
+            'estado' => 2
+        ]);
+        $prodcutoId = $producto->producto_id;
+
+        CategoriaProducto::create([
+            'producto_id' => $prodcutoId,
+            'categoria_id' => $request->categoria
+        ]);
+    }
+
+    private function  createProductoPendiente(Request $request)
+    {
+        $producto = Producto::create([
             'nombre' => $request-> nombre,
             'usuario_vendedor' => $request->usuario_vendedor,
             'descripcion' => $request->descripcion,
@@ -37,16 +113,12 @@ class ProductoController extends Controller
             'permite_contactar'=> $request->permite_contactar,
             'moneda_local' => $request->moneda_local
         ]);
-       $prodcutoId = $producto->id;
+        $prodcutoId = $producto->producto_id;
 
         CategoriaProducto::create([
             'producto_id' => $prodcutoId,
             'categoria_id' => $request->categoria
         ]);
-
-        return response()->json([
-            'msg' => 'Registrado con exito'
-        ], 200);
     }
 
     public function saveImage(Request $request)
@@ -87,6 +159,15 @@ class ProductoController extends Controller
         $productos = Producto::where('usuario_vendedor',$id)->orderBy('producto_id', 'desc')->get();
         return response()->json((
             $productos
+        ), 200);
+
+    }
+
+    public function showCategoria(int $id)
+    {
+        $productos = Producto::where('usuario_vendedor',$id)->orderBy('producto_id', 'desc')->get();
+        return response()->json((
+        $productos
         ), 200);
 
     }

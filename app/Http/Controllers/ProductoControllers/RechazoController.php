@@ -59,7 +59,10 @@ class RechazoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $rechazoProducto =  RechazoProducto::where('producto_id', $id)->first();
+        return response()->json((
+        $rechazoProducto)
+            , 200);
     }
 
     /**
