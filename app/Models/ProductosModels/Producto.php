@@ -35,5 +35,10 @@ class Producto extends Model
         return $this->belongsTo(Usuario::class, 'usuario_vendedor');
     }
 
+    public function categoriaProducto()
+    {
+        return $this->hasMany(CategoriaProducto::class);
+    }
+
 
 }

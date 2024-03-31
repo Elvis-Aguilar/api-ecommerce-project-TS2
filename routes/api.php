@@ -43,5 +43,9 @@ Route::post('productos/categoria-save', [CategoriaController::class,'store']);
 Route::get('productos/productos-pendientes', [ProductoController::class,'productosPendientes']);
 Route::post('productos/rechazo-producto', [RechazoController::class,'store']);
 Route::put('productos/acept-producto', [RechazoController::class,'acept']);
+Route::get('productos/categoria-producto/{id}', [CategoriaController::class,'categoriaProducto']);
+Route::delete('productos/delete-categoria-producto/{id}', [CategoriaController::class,'destroyCategoriaProducto']);
+Route::post('productos/asociar-categoria-producto/{id}', [CategoriaController::class,'storeCategoriaProducto']);
+Route::put('productos/update-producto/{id}', [ProductoController::class,'update']);
 
 
