@@ -11,6 +11,7 @@ class Producto extends Model
     use HasFactory;
 
     protected $table = 'producto';
+
     public $timestamps = false;
 
     protected $primaryKey = 'producto_id';

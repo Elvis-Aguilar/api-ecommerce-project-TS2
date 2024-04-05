@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\EventoControllers\EventoController;
+use App\Http\Controllers\EventoControllers\TipoEventoController;
 use App\Http\Controllers\ProductoControllers\CategoriaController;
 use App\Http\Controllers\ProductoControllers\ProductoController;
 use App\Http\Controllers\ProductoControllers\RechazoController;
@@ -50,6 +52,17 @@ Route::put('productos/update-producto/{id}', [ProductoController::class,'update'
 Route::get('productos/get-rechazo/{id}', [RechazoController::class,'show']);
 Route::get('productos/get-productos-filter-categoria/{id}', [CategoriaController::class,'productoCategoria']);
 Route::get('productos/get-productos-filter-form-pago/{id}', [ProductoController::class,'indexFilterFormPago']);
+
+//ruta para Eventos
+Route::get('eventos/tipo-eventos', [TipoEventoController::class,'index']);
+Route::post('eventos/evento-save-image', [EventoController::class,'saveImage']);
+Route::post('eventos/evento-save', [EventoController::class,'store']);
+Route::get('eventos/eventos-pendientes', [EventoController::class,'eventosPendientes']);
+Route::post('eventos/rechazo-evento', [RechazoController::class,'storeEvento']);
+Route::put('eventos/acept-evento', [RechazoController::class,'aceptEvento']);
+Route::get('eventos/eventos-user/{id}', [EventoController::class,'show']);
+Route::get('eventos/get-eventos', [EventoController::class,'index']);
+Route::get('eventos/eventos-img/{id}', [EventoController::class,'imge']);
 
 
 

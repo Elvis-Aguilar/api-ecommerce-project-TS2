@@ -59,7 +59,7 @@ class ProductoController extends Controller
 
         $userConfiable = ConfiabilidadUsuario::where('usuario_id',$request->usuario_vendedor)->first();
         if($userConfiable){
-            if($userConfiable->usuario_aprobados >= $request->min_aprobados){
+            if($userConfiable->usuario_aprobados >= $userConfiable->min_aprobados){
                  $this->createProductoAprobado($request);
             }else{
                  $this->createProductoPendiente($request);

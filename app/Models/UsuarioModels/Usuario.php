@@ -2,6 +2,7 @@
 
 namespace App\Models\UsuarioModels;
 
+use App\Models\EventosModels\Evento;
 use App\Models\ProductosModels\Producto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -41,5 +42,10 @@ class Usuario extends Model
     public function producto()
     {
         return $this->hasMany(Producto::class);
+    }
+
+    public function evento()
+    {
+        return $this->hasMany(Evento::class);
     }
 }
