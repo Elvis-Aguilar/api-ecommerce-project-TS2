@@ -17,7 +17,10 @@ class TipoEventoController extends Controller
         return TipoEventoModel::where('estado', 2)->get();
     }
 
-
+    public function tipoEventoPendietes()
+    {
+        return TipoEventoModel::where('estado', 1)->get();
+    }
 
 
     /**
@@ -25,7 +28,10 @@ class TipoEventoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        TipoEventoModel::create($request->all());
+        return response()->json([
+            'msg' => 'Registrado con exito'
+        ], 200);
     }
 
     /**
@@ -41,7 +47,13 @@ class TipoEventoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $tipoEvent = TipoEventoModel::find($id);
+        if($tipoEvent){
+            $tipoEvent->update(['estado' => $request->estado]);
+        }
+        return response()->json([
+            'msg' => 'Actulizado con exito'
+        ], 200);
     }
 
     /**

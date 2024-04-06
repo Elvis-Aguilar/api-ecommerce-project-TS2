@@ -63,6 +63,12 @@ Route::put('eventos/acept-evento', [RechazoController::class,'aceptEvento']);
 Route::get('eventos/eventos-user/{id}', [EventoController::class,'show']);
 Route::get('eventos/get-eventos', [EventoController::class,'index']);
 Route::get('eventos/eventos-img/{id}', [EventoController::class,'imge']);
+Route::get('eventos/get-rechazo/{id}', [RechazoController::class,'showEvent']);
+Route::post('eventos/tipo-evento-save', [TipoEventoController::class,'store']);
+Route::get('eventos/tipo-evento-pendientes', [TipoEventoController::class,'tipoEventoPendietes']);
+Route::put('eventos/update-tipo-evento/{id}', [TipoEventoController::class,'update']);
+
+
 
 
 

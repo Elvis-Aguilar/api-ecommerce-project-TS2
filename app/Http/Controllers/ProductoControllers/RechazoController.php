@@ -110,6 +110,14 @@ class RechazoController extends Controller
             , 200);
     }
 
+    public function showEvent(string $id)
+    {
+        $rechazo =  RechazoEvento::where('evento_id', $id)->first();
+        return response()->json((
+        $rechazo)
+            , 200);
+    }
+
     /**
      * Update the specified resource in storage.
      */
