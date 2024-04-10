@@ -36,4 +36,9 @@ class Evento extends Model
     {
         return $this->belongsTo(Usuario::class, 'usuario_publicador');
     }
+
+    public function controlTipoEvento()
+    {
+        return $this->hasMany(ControlTipoEvento::class);
+    }
 }

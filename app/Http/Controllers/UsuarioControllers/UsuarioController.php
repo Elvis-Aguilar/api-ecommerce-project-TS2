@@ -109,9 +109,12 @@ class UsuarioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
-        //
+        $usuario = Usuario::where('usuario_id',$id)->first();
+        return response()->json((
+        $usuario)
+            , 200);
     }
 
     /**

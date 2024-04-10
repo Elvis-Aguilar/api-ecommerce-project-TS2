@@ -19,7 +19,7 @@ class EventoController extends Controller
     {
         return Evento::where('estado', 2)
             ->orderBy('evento_id', 'desc')
-            ->take(12)
+            ->take(6)
             ->get();
     }
 
@@ -134,6 +134,33 @@ class EventoController extends Controller
         ), 200);
     }
 
+    public function indexFilterFormPago(int $id)
+    {
+        return match ($id) {
+            1 => Evento::where('estado', 2)
+                ->where('remunerar_moneda_sitema', '>', 0)
+                ->orderBy('evento_id', 'desc')
+                ->take(6)
+                ->get(),
+            2 => Evento::where('estado', 2)
+                ->where('remunerar_moneda_local', '>', 0)
+                ->orderBy('evento_id', 'desc')
+                ->take(6)
+                ->get(),
+            3 => Evento::where('estado', 2)
+                ->where('es_voluntariado', '>', 0)
+                ->orderBy('evento_id', 'desc')
+                ->take(6)
+                ->get(),
+            default => Evento::where('estado', 2)
+                ->orderBy('evento_id', 'desc')
+                ->take(6)
+                ->get(),
+        };
+
+
+    }
+
     /**
      * funcion para devolver la imagen registrada
      */
@@ -155,6 +182,14 @@ class EventoController extends Controller
             ->get();
 
         return $eventos;
+    }
+
+    public function showById(int $id)
+    {
+        $evento = Evento::where('evento_id',$id)->first();
+        return response()->json((
+        $evento)
+            , 200);
     }
 
 

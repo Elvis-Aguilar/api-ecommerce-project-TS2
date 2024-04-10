@@ -5,7 +5,7 @@ namespace App\Models\EventosModels;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TipoEventoModel extends Model
+class TipoEvento extends Model
 {
     use HasFactory;
 
@@ -20,4 +20,9 @@ class TipoEventoModel extends Model
         'descripcion',
         'estado'
     ];
+
+    public function controlTipoEvento()
+    {
+        return $this->hasMany(ControlTipoEvento::class);
+    }
 }

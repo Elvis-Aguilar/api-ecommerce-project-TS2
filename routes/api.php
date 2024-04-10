@@ -29,6 +29,7 @@ Route::post('user-register-foto', [UsuarioController::class,'saveImage']);
 Route::get('users', [UsuarioController::class, 'index']);
 Route::post('user-login', [UsuarioController::class,'logUser']);
 Route::get('user-img/{id}', [UsuarioController::class,'imge']);
+Route::get('user/{id}', [UsuarioController::class,'show']);
 
 
 //rutas para las producto
@@ -61,12 +62,18 @@ Route::get('eventos/eventos-pendientes', [EventoController::class,'eventosPendie
 Route::post('eventos/rechazo-evento', [RechazoController::class,'storeEvento']);
 Route::put('eventos/acept-evento', [RechazoController::class,'aceptEvento']);
 Route::get('eventos/eventos-user/{id}', [EventoController::class,'show']);
-Route::get('eventos/get-eventos', [EventoController::class,'index']);
 Route::get('eventos/eventos-img/{id}', [EventoController::class,'imge']);
 Route::get('eventos/get-rechazo/{id}', [RechazoController::class,'showEvent']);
 Route::post('eventos/tipo-evento-save', [TipoEventoController::class,'store']);
 Route::get('eventos/tipo-evento-pendientes', [TipoEventoController::class,'tipoEventoPendietes']);
 Route::put('eventos/update-tipo-evento/{id}', [TipoEventoController::class,'update']);
+Route::get('eventos/get-eventos', [EventoController::class,'index']);
+Route::get('eventos/get-evento/{id}', [EventoController::class,'showById']);
+Route::get('eventos/get-eventos-filter-tipo/{id}', [TipoEventoController::class,'eventoCategoria']);
+Route::get('eventos/get-eventos-filter-form-pago/{id}', [EventoController::class,'indexFilterFormPago']);
+Route::delete('eventos/delete-tipo-evento/{id}', [TipoEventoController::class,'destroyTipoEvento']);
+Route::post('eventos/asociar-tipo-evento/{id}', [TipoEventoController::class,'storeTipoEvento']);
+
 
 
 

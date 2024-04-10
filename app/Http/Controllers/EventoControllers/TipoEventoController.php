@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\EventoControllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\EventosModels\TipoEventoModel;
+use App\Models\EventosModels\ControlTipoEvento;
+use App\Models\EventosModels\TipoEvento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,12 +15,12 @@ class TipoEventoController extends Controller
      */
     public function index()
     {
-        return TipoEventoModel::where('estado', 2)->get();
+        return TipoEvento::where('estado', 2)->get();
     }
 
     public function tipoEventoPendietes()
     {
-        return TipoEventoModel::where('estado', 1)->get();
+        return TipoEvento::where('estado', 1)->get();
     }
 
 
@@ -28,7 +29,7 @@ class TipoEventoController extends Controller
      */
     public function store(Request $request)
     {
-        TipoEventoModel::create($request->all());
+        TipoEvento::create($request->all());
         return response()->json([
             'msg' => 'Registrado con exito'
         ], 200);
@@ -42,12 +43,44 @@ class TipoEventoController extends Controller
         //
     }
 
+    public function eventoCategoria(int $id)
+    {
+        $tipoEvento = ControlTipoEvento::where('tipo_evento_id', $id)
+            ->with(['evento' => function($query){
+                $query->where('estado',2)->orderBy('evento_id', 'desc')->take(6);
+            }])->orderBy('evento_id', 'desc')->get();
+
+        return $tipoEvento;
+    }
+
+
+    public function destroyTipoEvento(int $id){
+        $controlTipoEvento = ControlTipoEvento::find($id);
+        $idEvento = 0;
+        if($controlTipoEvento){
+            $idEvento = $controlTipoEvento->evento_id;
+            $controlTipoEvento->delete();
+        }
+        $controlTipoEventos = ControlTipoEvento::where('evento_id', $idEvento)->with('tipo_evento')->get();
+        return $controlTipoEventos;
+    }
+
+    public function storeTipoEvento(Request $request, int $id){
+        ControlTipoEvento::create([
+            'evento_id' => $request->estado,
+            'tipo_evento_id' => $request->tipo_evento_id,
+        ]);
+        $controlTipoEvento = ControlTipoEvento::where('evento_id', $id)->with('TipoEvento')->get();
+        return $controlTipoEvento;
+    }
+
+
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        $tipoEvent = TipoEventoModel::find($id);
+        $tipoEvent = TipoEvento::find($id);
         if($tipoEvent){
             $tipoEvent->update(['estado' => $request->estado]);
         }
