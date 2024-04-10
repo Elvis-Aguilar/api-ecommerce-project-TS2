@@ -71,8 +71,10 @@ Route::get('eventos/get-eventos', [EventoController::class,'index']);
 Route::get('eventos/get-evento/{id}', [EventoController::class,'showById']);
 Route::get('eventos/get-eventos-filter-tipo/{id}', [TipoEventoController::class,'eventoCategoria']);
 Route::get('eventos/get-eventos-filter-form-pago/{id}', [EventoController::class,'indexFilterFormPago']);
+Route::get('eventos/tipo-evento/{id}', [TipoEventoController::class,'categoriaProducto']);
 Route::delete('eventos/delete-tipo-evento/{id}', [TipoEventoController::class,'destroyTipoEvento']);
 Route::post('eventos/asociar-tipo-evento/{id}', [TipoEventoController::class,'storeTipoEvento']);
+Route::put('eventos/update-evento/{id}', [EventoController::class,'update']);
 
 
 

@@ -196,9 +196,15 @@ class EventoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $id)
     {
-        //
+        $evento = Evento::find($id);
+        if ($evento){
+            $evento->update($request->all());
+        }
+        return response()->json([
+            'msg' => 'Actulizado con exito'
+        ], 200);
     }
 
     /**

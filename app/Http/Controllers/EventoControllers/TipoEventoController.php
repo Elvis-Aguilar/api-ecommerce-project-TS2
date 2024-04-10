@@ -43,6 +43,11 @@ class TipoEventoController extends Controller
         //
     }
 
+    public function categoriaProducto(int $id){
+        $tipoEvento = ControlTipoEvento::where('evento_id', $id)->with('tipoEvento')->get();
+        return $tipoEvento;
+    }
+
     public function eventoCategoria(int $id)
     {
         $tipoEvento = ControlTipoEvento::where('tipo_evento_id', $id)
@@ -61,16 +66,16 @@ class TipoEventoController extends Controller
             $idEvento = $controlTipoEvento->evento_id;
             $controlTipoEvento->delete();
         }
-        $controlTipoEventos = ControlTipoEvento::where('evento_id', $idEvento)->with('tipo_evento')->get();
+        $controlTipoEventos = ControlTipoEvento::where('evento_id', $idEvento)->with('tipoEvento')->get();
         return $controlTipoEventos;
     }
 
     public function storeTipoEvento(Request $request, int $id){
         ControlTipoEvento::create([
-            'evento_id' => $request->estado,
-            'tipo_evento_id' => $request->tipo_evento_id,
+            'evento_id' => $request->evento_id,
+            'tipo_evento_id' => $request->tipo_even_id,
         ]);
-        $controlTipoEvento = ControlTipoEvento::where('evento_id', $id)->with('TipoEvento')->get();
+        $controlTipoEvento = ControlTipoEvento::where('evento_id', $id)->with('tipoEvento')->get();
         return $controlTipoEvento;
     }
 
