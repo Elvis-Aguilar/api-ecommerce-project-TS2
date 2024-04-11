@@ -5,6 +5,7 @@ namespace App\Http\Controllers\EventoControllers;
 use App\Http\Controllers\Controller;
 use App\Models\EventosModels\ControlTipoEvento;
 use App\Models\EventosModels\Evento;
+use App\Models\OtrosModels\ReportePublicacion;
 use App\Models\ProductosModels\ConfiabilidadUsuario;
 use App\Models\ProductosModels\Producto;
 use Illuminate\Http\Request;
@@ -204,6 +205,17 @@ class EventoController extends Controller
         }
         return response()->json([
             'msg' => 'Actulizado con exito'
+        ], 200);
+    }
+
+    public function reportarEvento(Request $request)
+    {
+        ReportePublicacion::create([
+            'evento_id' => $request->evento_id,
+            'descripcion' => $request->descripcion
+        ]);
+        return response()->json([
+            'msg' => 'Producto reportado'
         ], 200);
     }
 

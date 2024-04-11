@@ -53,6 +53,8 @@ Route::put('productos/update-producto/{id}', [ProductoController::class,'update'
 Route::get('productos/get-rechazo/{id}', [RechazoController::class,'show']);
 Route::get('productos/get-productos-filter-categoria/{id}', [CategoriaController::class,'productoCategoria']);
 Route::get('productos/get-productos-filter-form-pago/{id}', [ProductoController::class,'indexFilterFormPago']);
+Route::post('productos/save-report-producto', [ProductoController::class,'reportarProducto']);
+
 
 //ruta para Eventos
 Route::get('eventos/tipo-eventos', [TipoEventoController::class,'index']);
@@ -75,6 +77,7 @@ Route::get('eventos/tipo-evento/{id}', [TipoEventoController::class,'categoriaPr
 Route::delete('eventos/delete-tipo-evento/{id}', [TipoEventoController::class,'destroyTipoEvento']);
 Route::post('eventos/asociar-tipo-evento/{id}', [TipoEventoController::class,'storeTipoEvento']);
 Route::put('eventos/update-evento/{id}', [EventoController::class,'update']);
+Route::post('eventos/save-report-evento', [EventoController::class,'reportarEvento']);
 
 
 

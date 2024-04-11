@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ProductoControllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\OtrosModels\ReportePublicacion;
 use App\Models\ProductosModels\Categoria;
 use App\Models\ProductosModels\CategoriaProducto;
 use App\Models\ProductosModels\ConfiabilidadUsuario;
@@ -56,7 +57,6 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-
         $userConfiable = ConfiabilidadUsuario::where('usuario_id',$request->usuario_vendedor)->first();
         if($userConfiable){
             if($userConfiable->usuario_aprobados >= $userConfiable->min_aprobados){
@@ -181,7 +181,6 @@ class ProductoController extends Controller
 
     }
 
-
     public function imge(string $id)
     {
        $path = storage_path(path: 'app/public/productos/' . $id);
@@ -216,6 +215,18 @@ class ProductoController extends Controller
             'msg' => 'Actulizado con exito'
         ], 200);
     }
+
+    public function reportarProducto(Request $request)
+    {
+        ReportePublicacion::create([
+            'producto_id' => $request->producto_id,
+            'descripcion' => $request->descripcion
+        ]);
+        return response()->json([
+            'msg' => 'Producto reportado'
+        ], 200);
+    }
+
 
     /**
      * Remove the specified resource from storage.
