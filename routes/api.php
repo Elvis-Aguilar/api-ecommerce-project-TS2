@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventoControllers\EventoController;
 use App\Http\Controllers\EventoControllers\TipoEventoController;
+use App\Http\Controllers\OtrosControllers\DivisaController;
 use App\Http\Controllers\ProductoControllers\CategoriaController;
 use App\Http\Controllers\ProductoControllers\ProductoController;
 use App\Http\Controllers\ProductoControllers\RechazoController;
@@ -30,6 +31,8 @@ Route::get('users', [UsuarioController::class, 'index']);
 Route::post('user-login', [UsuarioController::class,'logUser']);
 Route::get('user-img/{id}', [UsuarioController::class,'imge']);
 Route::get('user/{id}', [UsuarioController::class,'show']);
+Route::get('cuenta-monetaria/{id}', [UsuarioController::class,'getCuentaMonetaria']);
+Route::put('update-cuenta-monetaria/{id}', [UsuarioController::class,'updateCuentaMonetaria']);
 
 
 //rutas para las producto
@@ -54,6 +57,10 @@ Route::get('productos/get-rechazo/{id}', [RechazoController::class,'show']);
 Route::get('productos/get-productos-filter-categoria/{id}', [CategoriaController::class,'productoCategoria']);
 Route::get('productos/get-productos-filter-form-pago/{id}', [ProductoController::class,'indexFilterFormPago']);
 Route::post('productos/save-report-producto', [ProductoController::class,'reportarProducto']);
+Route::get('productos/get-reportes-productos', [ProductoController::class,'getReporteProductos']);
+Route::put('productos/update-reporte-producto/{id}', [ProductoController::class,'updateReporte']);
+Route::get('productos/get-reportes-producto/{id}', [ProductoController::class,'getReporteProducto']);
+Route::put('productos/baja-producto/{id}', [ProductoController::class,'bajaProducto']);
 
 
 //ruta para Eventos
@@ -78,8 +85,12 @@ Route::delete('eventos/delete-tipo-evento/{id}', [TipoEventoController::class,'d
 Route::post('eventos/asociar-tipo-evento/{id}', [TipoEventoController::class,'storeTipoEvento']);
 Route::put('eventos/update-evento/{id}', [EventoController::class,'update']);
 Route::post('eventos/save-report-evento', [EventoController::class,'reportarEvento']);
+Route::get('eventos/get-reportes-eventos', [EventoController::class,'getReporteEventos']);
 
 
+//rutas para la divisa
+Route::get('divisa/get-divisa', [DivisaController::class,'index']);
+Route::put('divisa/update-divisa/{id}', [DivisaController::class,'update']);
 
 
 

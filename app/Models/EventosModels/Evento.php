@@ -2,6 +2,7 @@
 
 namespace App\Models\EventosModels;
 
+use App\Models\OtrosModels\ReportePublicacion;
 use App\Models\UsuarioModels\Usuario;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -41,4 +42,10 @@ class Evento extends Model
     {
         return $this->hasMany(ControlTipoEvento::class);
     }
+
+    public function reportePublicacion()
+    {
+        return $this->hasMany(ReportePublicacion::class);
+    }
+
 }

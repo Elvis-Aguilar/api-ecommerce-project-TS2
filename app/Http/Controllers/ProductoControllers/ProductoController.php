@@ -227,6 +227,49 @@ class ProductoController extends Controller
         ], 200);
     }
 
+    public function  getReporteProductos()
+    {
+        $reportePublicacion = ReportePublicacion::where('estado', 1)
+            ->whereNotNull('producto_id')
+            ->with('producto')
+            ->get();
+
+        return $reportePublicacion;
+
+    }
+
+    public function  getReporteProducto(int $id)
+    {
+        $reportePublicacion = ReportePublicacion::whereNotNull('producto_id')
+            -> where('producto_id', $id)
+            ->with('producto')
+            ->get();
+
+        return $reportePublicacion;
+
+    }
+
+    public function updateReporte(Request $request, int $id)
+    {
+        $reporte = ReportePublicacion::find($id);
+        if ($reporte){
+            $reporte->update($request->all());
+        }
+        return response()->json([
+            'msg' => 'Actulizado con exito'
+        ], 200);
+    }
+
+    public function bajaProducto(Request $request, int $id)
+    {
+        $producto = Producto::find($id);
+        if ($producto){
+            $producto->update(['estado' => $request->estado]);
+        }
+        return response()->json([
+            'msg' => 'Actulizado con exito'
+        ], 200);
+    }
 
     /**
      * Remove the specified resource from storage.

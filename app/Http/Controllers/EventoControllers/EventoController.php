@@ -219,6 +219,17 @@ class EventoController extends Controller
         ], 200);
     }
 
+    public function  getReporteEventos()
+    {
+        $reportePublicacion = ReportePublicacion::where('estado', 1)
+            ->whereNotNull('evento_id')
+            ->with('evento')
+            ->get();
+
+        return $reportePublicacion;
+
+    }
+
     /**
      * Remove the specified resource from storage.
      */

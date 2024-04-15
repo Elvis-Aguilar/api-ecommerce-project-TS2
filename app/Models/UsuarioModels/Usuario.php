@@ -48,4 +48,10 @@ class Usuario extends Model
     {
         return $this->hasMany(Evento::class);
     }
+
+    public function cuentaMonetaria()
+    {
+        return $this->belongsTo(Usuario::class);
+    }
+
 }

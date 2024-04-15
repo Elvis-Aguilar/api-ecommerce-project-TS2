@@ -2,6 +2,7 @@
 
 namespace App\Models\ProductosModels;
 
+use App\Models\OtrosModels\ReportePublicacion;
 use App\Models\UsuarioModels\Usuario;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -39,6 +40,11 @@ class Producto extends Model
     public function categoriaProducto()
     {
         return $this->hasMany(CategoriaProducto::class);
+    }
+
+    public function reportePublicacion()
+    {
+        return $this->hasMany(ReportePublicacion::class);
     }
 
 

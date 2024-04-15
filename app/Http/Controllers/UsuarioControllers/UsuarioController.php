@@ -4,6 +4,7 @@ namespace App\Http\Controllers\UsuarioControllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UsuarioRequests\RegistrarUsuarioRequest;
+use App\Models\UsuarioModels\CuentaMonetaria;
 use App\Models\UsuarioModels\Usuario;
 use App\Models\UsuarioModels\UsuarioInfoContacto;
 use Illuminate\Http\Request;
@@ -56,6 +57,12 @@ class UsuarioController extends Controller
           'info_contacto' =>$infoContactoId,
           'rol' => $request['rol'],
           ]);
+
+        //se crea su cuanta valores en 0 y 10
+        CuentaMonetaria::create([
+            'usuario_id' => $usuario->usuario_id,
+            'moneda_ms' => 5
+        ]);
 
 
         return response()->json((
@@ -117,7 +124,22 @@ class UsuarioController extends Controller
             , 200);
     }
 
-    /**
+    public function getCuentaMonetaria(int $id)
+    {
+        $cuentamonetaria = CuentaMonetaria::where('usuario_id', $id)->first();
+        return $cuentamonetaria;
+    }
+
+    public function updateCuentaMonetaria(Request $request, int $id)
+    {
+        $cuentamonetaria = CuentaMonetaria::find($id);
+        if ($cuentamonetaria){
+            $cuentamonetaria->update($request->all());
+        }
+        return CuentaMonetaria::find($id);;
+    }
+
+        /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
