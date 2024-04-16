@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\OtrosModels\ReportePublicacion;
 use App\Models\ProductosModels\Categoria;
 use App\Models\ProductosModels\CategoriaProducto;
+use App\Models\ProductosModels\CompraProducto;
 use App\Models\ProductosModels\ConfiabilidadUsuario;
 use App\Models\ProductosModels\Producto;
 use App\Models\ProductosModels\RechazoProducto;
+use App\Models\UsuarioModels\CuentaMonetaria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -269,6 +271,64 @@ class ProductoController extends Controller
         return response()->json([
             'msg' => 'Actulizado con exito'
         ], 200);
+    }
+
+    public function comprarProducto(Request $request)
+    {
+        if ($this->saveCompra($request) && $this->descontarCantidadProducto($request)){
+            $this->updateCuentaMonetaria($request);
+            $this->updateCuentaMonedaAumento($request);
+        }
+        return response()->json([
+            'msg' => 'Actulizado con exito'
+        ], 200);
+    }
+
+    private function saveCompra(Request $request)
+    {
+        $compra = CompraProducto::create([
+            'usuario_comprador_id' => $request->usuario_comprador_id,
+            'usuario_vendedor_id' => $request->usuario_vendedor_id,
+            'producto_id' => $request->producto_id,
+            'cantidad_comprado' => $request->cantidad_comprado,
+            'total_moneda_ms' => $request->total_moneda_ms,
+            'total_moneda_local' => $request->total_moneda_local,
+            'fecha_compra' => $request->fecha_compra
+        ]);
+        return $compra;
+    }
+
+    private  function descontarCantidadProducto(Request $request)
+    {
+        $producto = Producto::find($request->producto_id);
+        if ($producto){
+            $cantidad =  $producto->cantidad_exit - $request->cantidad_comprado;
+            $producto->update([
+                'cantidad_exit' => $cantidad
+            ]);
+        }
+        return $producto;
+    }
+
+    private function updateCuentaMonetaria(Request $request){
+        $id = $request->cuenta_monetaria['cuenta_monteraia_id'];
+        $cuentamonetaria = CuentaMonetaria::find($id);
+        if ($cuentamonetaria){
+            $cuentamonetaria->update($request->cuenta_monetaria);
+        }
+    }
+
+    private function updateCuentaMonedaAumento(Request $request){
+        $cuentamonetaria = CuentaMonetaria::where('usuario_id', $request->usuario_vendedor_id)->first();
+        if ($cuentamonetaria){
+            $calculoms = $cuentamonetaria->moneda_ms + $request->total_moneda_ms;
+            $calculoQ = $cuentamonetaria->moneda_local + $request->total_moneda_local;
+            $cuentamonetaria->update([
+                'moneda_ms' => $calculoms,
+                'moneda_local' => $calculoQ
+            ]);
+        }
+
     }
 
     /**

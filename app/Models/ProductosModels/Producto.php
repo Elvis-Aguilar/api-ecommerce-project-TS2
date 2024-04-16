@@ -47,5 +47,10 @@ class Producto extends Model
         return $this->hasMany(ReportePublicacion::class);
     }
 
+    public function compraProducto()
+    {
+        return $this->hasMany(CompraProducto::class);
+    }
+
 
 }

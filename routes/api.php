@@ -61,6 +61,7 @@ Route::get('productos/get-reportes-productos', [ProductoController::class,'getRe
 Route::put('productos/update-reporte-producto/{id}', [ProductoController::class,'updateReporte']);
 Route::get('productos/get-reportes-producto/{id}', [ProductoController::class,'getReporteProducto']);
 Route::put('productos/baja-producto/{id}', [ProductoController::class,'bajaProducto']);
+Route::post('productos/save-compra-producto', [ProductoController::class,'comprarProducto']);
 
 
 //ruta para Eventos
