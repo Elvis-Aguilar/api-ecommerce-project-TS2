@@ -48,4 +48,9 @@ class Evento extends Model
         return $this->hasMany(ReportePublicacion::class);
     }
 
+    public function listaAsistencia()
+    {
+        return $this->hasMany(ListaAsistencia::class);
+    }
+
 }

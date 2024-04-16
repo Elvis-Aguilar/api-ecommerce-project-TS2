@@ -5,9 +5,11 @@ namespace App\Http\Controllers\EventoControllers;
 use App\Http\Controllers\Controller;
 use App\Models\EventosModels\ControlTipoEvento;
 use App\Models\EventosModels\Evento;
+use App\Models\EventosModels\ListaAsistencia;
 use App\Models\OtrosModels\ReportePublicacion;
 use App\Models\ProductosModels\ConfiabilidadUsuario;
 use App\Models\ProductosModels\Producto;
+use App\Models\UsuarioModels\CuentaMonetaria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -229,6 +231,65 @@ class EventoController extends Controller
         return $reportePublicacion;
 
     }
+
+    public function storeLista(Request $request){
+        $lista = ListaAsistencia::where('usuario_id', $request->usuario_id)
+            ->where('evento_id', $request->evento_id)->first();
+        if ($lista){
+            return response()->json([
+                'msg' => 'Producto reportado'
+            ], 200);
+        }else{
+            ListaAsistencia::create($request->all());
+            return response()->json([
+                'msg' => 'Producto reportado'
+            ], 200);
+        }
+    }
+
+    public function getlistasId(int $id){
+        $listas = ListaAsistencia::where('evento_id', $id)
+            ->with('usuario')->get();
+        return $listas;
+    }
+
+    public function updateListaId(Request $request){
+        $lista = ListaAsistencia::find($request->lista_asistencia_id);
+        if ($lista){
+            $lista->update([
+                'estado' => $request->estado
+            ]);
+        }
+        return $lista;
+    }
+
+    public function updateLista(Request $request){
+        $affectedRows = ListaAsistencia::where('evento_id', $request->evento_id)
+            ->update(['estado' => $request->estado]);
+
+        return response()->json([
+            'msg' => 'Se actualizaron ' . $affectedRows . ' registros correctamente.'
+        ]);
+    }
+
+    public function gratificarLista(Request $request){
+        $participantes = ListaAsistencia::where('evento_id', $request->evento_id)
+            ->where('estado', 2)
+            ->with('usuario')
+            ->get()
+            ->pluck('usuario');
+        foreach ($participantes as $usuario) {
+            $cuentaMonetaria = CuentaMonetaria::where('usuario_id', $usuario->usuario_id)->first();
+            if ($cuentaMonetaria) {
+                $calculo = $request->estado + $cuentaMonetaria->moneda_ms;
+                $cuentaMonetaria->update(['moneda_ms' => $calculo]);
+            }
+        }
+        return response()->json([
+            'msg' => 'Se actualizaron registros correctamente.'
+        ]);
+    }
+
 
     /**
      * Remove the specified resource from storage.

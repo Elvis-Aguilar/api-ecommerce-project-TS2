@@ -3,6 +3,7 @@
 namespace App\Models\UsuarioModels;
 
 use App\Models\EventosModels\Evento;
+use App\Models\EventosModels\ListaAsistencia;
 use App\Models\ProductosModels\CompraProducto;
 use App\Models\ProductosModels\Producto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -52,12 +53,17 @@ class Usuario extends Model
 
     public function cuentaMonetaria()
     {
-        return $this->belongsTo(Usuario::class);
+        return $this->belongsTo(CuentaMonetaria::class);
     }
 
     public function compraProducto()
     {
         return $this->hasMany(CompraProducto::class);
+    }
+
+    public function listaAsistencia()
+    {
+        return $this->hasMany(ListaAsistencia::class);
     }
 
 }

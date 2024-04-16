@@ -87,6 +87,11 @@ Route::post('eventos/asociar-tipo-evento/{id}', [TipoEventoController::class,'st
 Route::put('eventos/update-evento/{id}', [EventoController::class,'update']);
 Route::post('eventos/save-report-evento', [EventoController::class,'reportarEvento']);
 Route::get('eventos/get-reportes-eventos', [EventoController::class,'getReporteEventos']);
+Route::post('eventos/add-evento-list', [EventoController::class,'storeLista']);
+Route::get('eventos/get-lista-eventos/{id}', [EventoController::class,'getlistasId']);
+Route::put('eventos/update-evento-list', [EventoController::class,'updateListaId']);
+Route::put('eventos/update-evento-lists', [EventoController::class,'updateLista']);
+Route::put('eventos/gratificar-evento-lists', [EventoController::class,'gratificarLista']);
 
 
 //rutas para la divisa
