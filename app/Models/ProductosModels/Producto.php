@@ -52,5 +52,9 @@ class Producto extends Model
         return $this->hasMany(CompraProducto::class);
     }
 
+    public function truequeProducto()
+    {
+        return $this->hasMany(TruequeProducto::class);
+    }
 
 }

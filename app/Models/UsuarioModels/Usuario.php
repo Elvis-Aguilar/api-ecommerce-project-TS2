@@ -6,6 +6,7 @@ use App\Models\EventosModels\Evento;
 use App\Models\EventosModels\ListaAsistencia;
 use App\Models\ProductosModels\CompraProducto;
 use App\Models\ProductosModels\Producto;
+use App\Models\ProductosModels\TruequeProducto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -65,5 +66,11 @@ class Usuario extends Model
     {
         return $this->hasMany(ListaAsistencia::class);
     }
+
+    public function truequeProducto()
+    {
+        return $this->hasMany(TruequeProducto::class);
+    }
+
 
 }

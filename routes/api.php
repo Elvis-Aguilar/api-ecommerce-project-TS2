@@ -6,6 +6,7 @@ use App\Http\Controllers\OtrosControllers\DivisaController;
 use App\Http\Controllers\ProductoControllers\CategoriaController;
 use App\Http\Controllers\ProductoControllers\ProductoController;
 use App\Http\Controllers\ProductoControllers\RechazoController;
+use App\Http\Controllers\ProductoControllers\TruequeProductoController;
 use App\Http\Controllers\UsuarioControllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,7 @@ Route::get('cuenta-monetaria/{id}', [UsuarioController::class,'getCuentaMonetari
 Route::put('update-cuenta-monetaria/{id}', [UsuarioController::class,'updateCuentaMonetaria']);
 
 
+
 //rutas para las producto
 Route::get('productos/categories', [CategoriaController::class,'index']);
 Route::get('productos/categories-pendientes', [CategoriaController::class,'categoriesPendietes']);
@@ -62,6 +64,11 @@ Route::put('productos/update-reporte-producto/{id}', [ProductoController::class,
 Route::get('productos/get-reportes-producto/{id}', [ProductoController::class,'getReporteProducto']);
 Route::put('productos/baja-producto/{id}', [ProductoController::class,'bajaProducto']);
 Route::post('productos/save-compra-producto', [ProductoController::class,'comprarProducto']);
+//rutas para el trueque de productos
+Route::post('productos/save-trueque-producto', [TruequeProductoController::class,'store']);
+Route::get('productos/get-trueques-producto-res/{id}', [TruequeProductoController::class,'show']);
+Route::put('productos/update-trueque-producto', [TruequeProductoController::class,'update']);
+Route::get('productos/get-trueques-producto/{id}', [TruequeProductoController::class,'showPersonal']);
 
 
 //ruta para Eventos
