@@ -7,6 +7,7 @@ use App\Models\EventosModels\ListaAsistencia;
 use App\Models\ProductosModels\CompraProducto;
 use App\Models\ProductosModels\Producto;
 use App\Models\ProductosModels\TruequeProducto;
+use App\Models\ProductosModels\TruequeProductoServicio;
 use App\Models\ServiciosModels\Oferta;
 use App\Models\ServiciosModels\Servicio;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -82,6 +83,11 @@ class Usuario extends Model
     public function oferta()
     {
         return $this->hasMany(Oferta::class);
+    }
+
+    public function truequeProductoServicio()
+    {
+        return $this->hasMany(TruequeProductoServicio::class);
     }
 
 

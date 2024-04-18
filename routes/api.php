@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductoControllers\CategoriaController;
 use App\Http\Controllers\ProductoControllers\ProductoController;
 use App\Http\Controllers\ProductoControllers\RechazoController;
 use App\Http\Controllers\ProductoControllers\TruequeProductoController;
+use App\Http\Controllers\ProductoControllers\TruequeProductoServicioController;
 use App\Http\Controllers\ServicioControllers\OfertaController;
 use App\Http\Controllers\ServicioControllers\ServicioController;
 use App\Http\Controllers\UsuarioControllers\UsuarioController;
@@ -114,6 +115,9 @@ Route::get('servicios/get-servicio/{id}', [ServicioController::class,'showById']
 Route::post('servicios/save-oferta', [OfertaController::class,'store']);
 Route::get('servicios/get-servicios-user/{id}', [OfertaController::class,'show']);
 Route::put('servicios/update-oferta', [OfertaController::class,'update']);
+Route::post('servicios/save-trueque-producto', [TruequeProductoServicioController::class,'store']);
+Route::get('servicios/get-trueques-producto-res/{id}', [TruequeProductoServicioController::class,'show']);
+Route::put('servicios/update-trueque-producto', [TruequeProductoServicioController::class,'update']);
 
 
 

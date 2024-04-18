@@ -2,6 +2,7 @@
 
 namespace App\Models\ServiciosModels;
 
+use App\Models\ProductosModels\TruequeProductoServicio;
 use App\Models\UsuarioModels\Usuario;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -32,5 +33,10 @@ class Servicio extends Model
     public function oferta()
     {
         return $this->hasMany(Oferta::class);
+    }
+
+    public function truequeProductoServicio()
+    {
+        return $this->hasMany(TruequeProductoServicio::class);
     }
 }

@@ -61,8 +61,10 @@ class TruequeProductoController extends Controller
         $trueque = TruequeProducto::find($request->trueque_producto_id);
         if ($trueque){
             $trueque->update(['estado' => $request->estado]);
-            $this->updateProductoDar($request);
-            $this->updateProductoSoli($request);
+            if ($trueque->estado == 2){
+                $this->updateProductoDar($request);
+                $this->updateProductoSoli($request);
+            }
         }
         $trueques = TruequeProducto::where('usuario_propietario_id', $request->usuario_propietario_id)
             ->where('estado', 1)->with('usuarioSolicitante')

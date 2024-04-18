@@ -57,4 +57,9 @@ class Producto extends Model
         return $this->hasMany(TruequeProducto::class);
     }
 
+    public function truequeProductoServicio()
+    {
+        return $this->hasMany(TruequeProductoServicio::class);
+    }
+
 }
