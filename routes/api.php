@@ -7,6 +7,8 @@ use App\Http\Controllers\ProductoControllers\CategoriaController;
 use App\Http\Controllers\ProductoControllers\ProductoController;
 use App\Http\Controllers\ProductoControllers\RechazoController;
 use App\Http\Controllers\ProductoControllers\TruequeProductoController;
+use App\Http\Controllers\ServicioControllers\OfertaController;
+use App\Http\Controllers\ServicioControllers\ServicioController;
 use App\Http\Controllers\UsuarioControllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -99,6 +101,20 @@ Route::get('eventos/get-lista-eventos/{id}', [EventoController::class,'getlistas
 Route::put('eventos/update-evento-list', [EventoController::class,'updateListaId']);
 Route::put('eventos/update-evento-lists', [EventoController::class,'updateLista']);
 Route::put('eventos/gratificar-evento-lists', [EventoController::class,'gratificarLista']);
+
+
+//rutas para el area de servicios
+Route::post('servicios/servicio-save-image', [ServicioController::class,'saveImage']);
+Route::post('servicios/servicio-save', [ServicioController::class,'store']);
+Route::get('servicios/servicios-user/{id}', [ServicioController::class,'show']);
+Route::get('servicios/servicios-img/{id}', [ServicioController::class,'imge']);
+Route::get('servicios/get-servicios', [ServicioController::class,'index']);
+Route::get('servicios/get-servicio/{id}', [ServicioController::class,'showById']);
+//apartado para ofertas del servicio
+Route::post('servicios/save-oferta', [OfertaController::class,'store']);
+Route::get('servicios/get-servicios-user/{id}', [OfertaController::class,'show']);
+Route::put('servicios/update-oferta', [OfertaController::class,'update']);
+
 
 
 //rutas para la divisa
